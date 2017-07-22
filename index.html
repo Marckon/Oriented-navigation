@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导航定位</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-size: 9pt;
+        }
+
+        #nav {
+            position: fixed;
+            left: 50%;
+            margin-left: 490px;
+            top: 300px;
+        }
+
+        #nav li {
+            font-size: 18pt;
+            margin-top: 10px;
+            list-style: none;
+            height: 50px;
+            line-height: 50px;
+            text-indent: 10px;
+            background-color: aqua;
+        }
+
+        #nav li a {
+            display: block;
+            height: 50px;
+            text-decoration: none;
+            color: darkslateblue;
+        }
+
+        #nav a:hover,
+        #nav a.current {
+            background-color: #0C4842;
+            color: white;
+        }
+
+        #title {
+            font-family: "Microsoft YaHei UI";
+            font-size: 24pt;
+            color: coral;
+            position: absolute;
+            top: -40pt;
+        }
+
+        #content {
+            margin: 0 auto;
+            padding: 10px;
+            width: 960px;
+            border: dotted lightgrey 1px;
+            position: relative;
+            top: 80px;
+        }
+
+        #content h1 {
+            margin-top: 25px;
+        }
+
+        .goods {
+            padding-top: 15px;
+            margin-top: 2px;
+        }
+
+        .goods {
+            display: block;
+            border-top: solid black 3px;
+            border-bottom: double lightgrey 1px;
+        }
+
+        .goods li {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .goods img {
+            width: 270px;
+        }
+    </style>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script>
+        //使用JQ
+        /*  $(document).ready(function () {
+         $(window).scroll(function () {
+         //                console.log($(window).scrollTop());
+         var top = $(window).scrollTop();
+         $("#content").find(".goods").each(function () {
+         var item_top = this.offsetTop;
+         if (top > item_top - 200) {
+         //console.log($(this).attr('class'));
+         //console.log($(this).prevAll('h1:eq(0)').attr('id'));
+         var current_id = '#' + $(this).prevAll('h1:first').attr('id');
+         } else {
+         return false;
+         }
+         $('#nav').find('a').each(function () {
+         if ($(this).attr('href') == (current_id)) {
+         $('#nav').find('.current').removeAttr('class');
+         $(this).attr('class', 'current');
+         }
+         })
+         })
+         })
+         })*/
+        //使用JS
+        function hascls(obj, cls) {
+            return obj.className.match(new RegExp("(\\s|^)" + cls + "(\\s|$)"));
+        }
+        function addcls(obj, cls) {
+            if (!hascls(obj, cls)) {
+                obj.className += ' '+cls;
+            }
+        }
+        function removecls(obj,cls) {
+            if(hascls(obj,cls)){
+                var reg=new RegExp("(\\s|^)" + cls + "(\\s|$)");
+                obj.className=obj.className.replace(reg,'');
+            }
+        }
+        window.onload = function () {
+            window.onscroll = function () {
+                var top = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+                var items = document.getElementsByClassName('goods');
+                var navs = document.getElementById('nav').getElementsByTagName('a');
+                var item_top = [];
+                for (var i = 0; i < items.length; i++) {
+                    item_top.push(items[i].offsetTop);
+                }
+                for (var i = 0; i < item_top.length; i++) {
+                    if (item_top[i] - 200 < top) {
+                        //console.log('#item'+(i+1));
+                        var id = 'item' + (i + 1);
+                        for (var j = 0; j < navs.length; j++) {
+                            //console.log(navs[j].href.split('#')[1]);
+                            if (id == navs[j].href.split('#')[1]) {
+                                addcls(navs[j], 'current');
+                            } else {
+                                removecls(navs[j], 'current');
+                            }
+                        }
+                    }
+                }
+
+                //console.log(top);
+            }
+
+        }
+    </script>
+</head>
+<body>
+<ul id="nav">
+    <li><a href="#item1">1F MALE FASHION</a></li>
+    <li><a href="#item2">2F FEMALE FASHION</a></li>
+    <li><a href="#item3">3F PERSONAL HYGIENE</a></li>
+    <li><a href="#item4">4F DIGITAL DEVICES</a></li>
+    <li><a href="#item5">5F BABY & MOTHER</a></li>
+</ul>
+<div id="content">
+    <div id="title">ONLINE SHOP</div>
+    <h1 id="item1">MALE FASHION</h1>
+    <ul class="goods">
+        <li><a href="#"><img src="male.jpg" alt=""></a></li>
+        <li><a href="#"><img src="male.jpg" alt=""></a></li>
+        <li><a href="#"><img src="male.jpg" alt=""></a></li>
+        <li><a href="#"><img src="male.jpg" alt=""></a></li>
+        <li><a href="#"><img src="male.jpg" alt=""></a></li>
+        <li><a href="#"><img src="male.jpg" alt=""></a></li>
+        <li><a href="#"><img src="male.jpg" alt=""></a></li>
+        <li><a href="#"><img src="male.jpg" alt=""></a></li>
+        <li><a href="#"><img src="male.jpg" alt=""></a></li>
+    </ul>
+    <h1 id="item2">FEMALE FASHION</h1>
+    <ul class="goods">
+        <li><a href="#"><img src="female.jpg" alt=""></a></li>
+        <li><a href="#"><img src="female.jpg" alt=""></a></li>
+        <li><a href="#"><img src="female.jpg" alt=""></a></li>
+        <li><a href="#"><img src="female.jpg" alt=""></a></li>
+        <li><a href="#"><img src="female.jpg" alt=""></a></li>
+        <li><a href="#"><img src="female.jpg" alt=""></a></li>
+        <li><a href="#"><img src="female.jpg" alt=""></a></li>
+        <li><a href="#"><img src="female.jpg" alt=""></a></li>
+        <li><a href="#"><img src="female.jpg" alt=""></a></li>
+    </ul>
+    <h1 id="item3">PERSONAL HYGIENE</h1>
+    <ul class="goods">
+        <li><a href="#"><img src="hygiene.webp.jpg" alt=""></a></li>
+        <li><a href="#"><img src="hygiene.webp.jpg" alt=""></a></li>
+        <li><a href="#"><img src="hygiene.webp.jpg" alt=""></a></li>
+        <li><a href="#"><img src="hygiene.webp.jpg" alt=""></a></li>
+        <li><a href="#"><img src="hygiene.webp.jpg" alt=""></a></li>
+        <li><a href="#"><img src="hygiene.webp.jpg" alt=""></a></li>
+        <li><a href="#"><img src="hygiene.webp.jpg" alt=""></a></li>
+        <li><a href="#"><img src="hygiene.webp.jpg" alt=""></a></li>
+        <li><a href="#"><img src="hygiene.webp.jpg" alt=""></a></li>
+    </ul>
+    <h1 id="item4">DIGITAL DEVICES</h1>
+    <ul class="goods">
+        <li><a href="#"><img src="phone.jpg_q90" alt=""></a></li>
+        <li><a href="#"><img src="phone.jpg_q90" alt=""></a></li>
+        <li><a href="#"><img src="phone.jpg_q90" alt=""></a></li>
+        <li><a href="#"><img src="phone.jpg_q90" alt=""></a></li>
+        <li><a href="#"><img src="phone.jpg_q90" alt=""></a></li>
+        <li><a href="#"><img src="phone.jpg_q90" alt=""></a></li>
+        <li><a href="#"><img src="phone.jpg_q90" alt=""></a></li>
+        <li><a href="#"><img src="phone.jpg_q90" alt=""></a></li>
+        <li><a href="#"><img src="phone.jpg_q90" alt=""></a></li>
+    </ul>
+    <h1 id="item5">BABY&MOTHER</h1>
+    <ul class="goods">
+        <li><a href="#"><img src="toy.jpg" alt=""></a></li>
+        <li><a href="#"><img src="toy.jpg" alt=""></a></li>
+        <li><a href="#"><img src="toy.jpg" alt=""></a></li>
+        <li><a href="#"><img src="toy.jpg" alt=""></a></li>
+        <li><a href="#"><img src="toy.jpg" alt=""></a></li>
+        <li><a href="#"><img src="toy.jpg" alt=""></a></li>
+        <li><a href="#"><img src="toy.jpg" alt=""></a></li>
+        <li><a href="#"><img src="toy.jpg" alt=""></a></li>
+        <li><a href="#"><img src="toy.jpg" alt=""></a></li>
+    </ul>
+</div>
+</body>
+</html>
